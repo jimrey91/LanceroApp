@@ -1,0 +1,134 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Registrar usuario</title>
+    </h:head>
+    <h:body>
+        <h:form>
+            <p:growl id="mensaje" autoUpdate="true" sticky="true" severity="info, error, warn" showDetail="true" globalOnly="true"/>
+            <p:wizard backLabel="Atras" nextLabel="Siguiente">
+                <p:tab id="personal" title="Datos">
+                   <p:panel header="Datos Personales">
+                    <h:panelGrid columns="3">
+                        <p:outputLabel value="Nombre"/>
+                        <p:inputText id="txtNombre" value="#{usuarioController.persona.nombre}" required="true" requiredMessage="Nombre requerido"/>
+                        <p:message for="txtNombre"/>
+                        
+                        <p:outputLabel value="Apellido"/>
+                        <p:inputText id="txtApellido" value="#{usuarioController.persona.apellido}" required="true" requiredMessage="Apellido requerido"/>
+                        <p:message for="txtApellido"/>
+                        
+                        <p:outputLabel value="DUI"/>
+                        <p:inputMask id="txtDUI" value="#{usuarioController.persona.dui}" mask="99999999-9"  maxlength="10" required="true"
+                                     requiredMessage="DUI requerido"/>
+                        <p:message for="txtDUI"/>
+                        
+                        <p:outputLabel value="NIT"/>
+                        <p:inputMask id="txtNIT" value="#{usuarioController.persona.nit}" mask="9999-999999-999-9"  maxlength="17" required="true"
+                                     requiredMessage="NIT requerido"/>
+                        <p:message for="txtNIT"/>
+                        
+                        <p:outputLabel value="Licencia conducir"/>
+                        <p:selectBooleanCheckbox id="txtLicencia" value="#{usuarioController.persona.licenciaConducir}" required="true" 
+                                                 requiredMessage="Licencia requerida" style="margin: 5px 0 ;"/>
+                        <p:message for="txtLicencia"/>
+                        
+                        <p:outputLabel value="Telefono fijo"/>
+                        <p:inputMask id="telFijo" value="#{usuarioController.persona.telefono}" mask="9999-9999"  maxlength="9"
+                                     required="true" requiredMessage="Tel. fijo requerido"/>
+                        <p:message for="telFijo"/>
+                        
+                        <p:outputLabel value="Telefono movil"/>
+                        <p:inputMask id="telMovil" value="#{usuarioController.persona.celular}" mask="9999-9999"  maxlength="9" required="true" requiredMessage="Tel. movil requerido"/>
+                        <p:message for="telMovil"/>
+                        
+                        <p:outputLabel value="Direccion"/>
+                        <p:inputTextarea id="txtDireccion" value="#{usuarioController.persona.direccion}" required="true" requiredMessage="Direccion requerida"/>
+                        <p:message for="txtDireccion"/>
+                        
+                        <p:outputLabel value="Correo Electronico"/>
+                        <p:inputText id="txtCorreo" value="#{usuarioController.persona.correoElectronico}"/>
+                        <p:spacer/>
+                        
+                                                                
+                        <p:outputLabel value="Nombre Empresa"/>
+                        <p:inputText id="txtEmpresa" value="#{usuarioController.persona.nombreEmpresa}" required="true" requiredMessage="Empresa requerido"/>
+                        <p:message for="txtEmpresa"/>
+                        
+                        <p:outputLabel value="Sexo"/>
+                        <p:selectOneRadio id="rdbSexo" value="#{usuarioController.persona.sexo}" required="true" requiredMessage="Sexo persona requerido">
+                            <f:selectItem itemLabel="Masculino" itemValue="m"/>
+                            <f:selectItem itemLabel="Femenino" itemValue="f"/>
+                        </p:selectOneRadio>
+                        <p:message for="rdbSexo"/>
+                        
+                        <p:outputLabel value="Departamento"/>
+                        <p:selectOneMenu id="selDep" value="#{usuarioController.departamento.codigoDepto}" required="true" requiredMessage="Departamento requerido">
+                            <f:selectItem itemLabel="Seleccione departamento" noSelectionOption="true"/>
+                            <f:selectItems value="#{usuarioController.departamentos}" var="dep" itemLabel="#{dep.nombreDepto}" itemValue="#{dep.codigoDepto}"/>
+                        </p:selectOneMenu>
+                        <p:message for="selDep"/>
+                        
+                    </h:panelGrid>
+                </p:panel>
+                </p:tab>
+                
+                <p:tab id="usuario" title="Usuario">
+                    <p:panel header="Crear Usuario">
+                        <h:panelGrid columns="3">
+                            <p:outputLabel value="Tipo de Cuenta"/>
+                            <p:selectOneMenu id="cboTipo" value="#{usuarioController.usuario.rol}" required="true" requiredMessage="Campo requerido">
+                                <f:selectItem itemValue="A" itemLabel="Administrador"/>
+                                <f:selectItem itemValue="C" itemLabel="Cliente"/>
+                            </p:selectOneMenu>
+                            <p:message for="cboTipo"/>
+                            
+                            <p:outputLabel value="Usuario"/>
+                            <p:inputText id="txtUsuario" value="#{usuarioController.usuario.usuario}" required="true" requiredMessage="Usuario requerido"/>
+                            <p:message for="txtUsuario"/>
+                            
+                            <p:outputLabel value="Contraseña"/>
+                            <p:password id="clave1" value="#{usuarioController.usuario.contrasena}" required="true" match="clave2"
+                                        weakLabel="Débil" goodLabel="Bueno" strongLabel="Fuerte" feedback="true" promptLabel="Ingrese una clave" 
+                                        validatorMessage="Las claves no coiciden" requiredMessage="Contraseña requerida"/>
+                            <p:message for="clave1" />
+                            
+                            <p:outputLabel value="Repetir contraseña"/>
+                            <p:password id="clave2" required="true" requiredMessage="Repita contraseña"/>
+                            <p:message for="clave2"/>
+                        </h:panelGrid>
+                   </p:panel>
+                </p:tab>
+                
+                <p:tab title="Confirmacion">
+                    <p:panel header="Confirmacion">
+                        <h:panelGrid columns="2">
+                            <p:outputLabel value="Nombre" style="font-weight: bold"/>
+                            <p:inplace id="nombre" editor="true">
+                            <p:inputText value="#{usuarioController.persona.nombre}"/>
+                            </p:inplace>
+                            
+                            <p:outputLabel value="Apellido" style="font-weight: bold"/>
+                            <p:inplace id="apellido" editor="true">
+                                <p:inputText value="#{usuarioController.persona.apellido}" />
+                            </p:inplace>
+                            
+                            <p:outputLabel value="Usuario" style="font-weight: bold"/>
+                            <p:inplace id="user" editor="true">
+                                <p:inputText value="#{usuarioController.usuario.usuario}"/>
+                            </p:inplace>
+                            <p:commandButton value="Registrar" actionListener="#{usuarioController.guardar()}"/>
+                        </h:panelGrid>
+                    </p:panel>
+                    
+                </p:tab>
+            </p:wizard>
+
+        </h:form>
+    </h:body>
+</html>
+
